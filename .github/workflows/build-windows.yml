@@ -1,0 +1,46 @@
+name: Build Windows EXE
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+      - name: Build Windows executable
+        run: pyinstaller --noconfirm --clean --onefile --windowed --name IPTV_Channel_Extractor_Pro main.py
+      - name: Verify executable
+        shell: pwsh
+        run: |
+          $exe = "dist/IPTV_Channel_Extractor_Pro.exe"
+          if (!(Test-Path $exe)) { throw "EXE was not created" }
+          Get-Item $exe | Format-List Name,Length
+          Get-FileHash $exe -Algorithm SHA256
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: IPTV-Channel-Extractor-Pro-Windows
+          path: dist/IPTV_Channel_Extractor_Pro.exe
+          if-no-files-found: error
+      - name: Publish release asset for version tags
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/IPTV_Channel_Extractor_Pro.exe
