@@ -26,9 +26,11 @@ To build an executable locally, run `build_exe.bat`. To build in GitHub, open **
 ## Documentation for developers and other AI tools
 
 - [PROJECT_GUIDE.md](PROJECT_GUIDE.md) — full product brief, setup, file map, data model, current behavior, limitations, and development workflow.
+- [PRODUCT_REQUIREMENTS.md](PRODUCT_REQUIREMENTS.md) — requested features, current implementation status, playback requirements, and acceptance criteria.
 - [ARCHITECTURE.md](ARCHITECTURE.md) — code structure, data flow, threading model, and technical notes.
 - [AI_HANDOFF.md](AI_HANDOFF.md) — copy-ready instructions for another developer or AI assistant to continue the project safely.
 - [PROMPT.md](PROMPT.md) — prioritized improvement roadmap.
+- [CONTRIBUTING.md](CONTRIBUTING.md) — safe coding, testing, and commit rules.
 
 ## Important limitations
 
